@@ -1,5 +1,24 @@
 class FigureO {
     function void draw(int x, int y) {
-        // todo
+        var int location;
+        // todo: figure out location..
+        let memAddress = 16384 + location;
+        do Memory.poke(memAddress + 0, 4080);
+        do Memory.poke(memAddress + 32, 8184);
+        do Memory.poke(memAddress + 64, 12300);
+        do Memory.poke(memAddress + 96, 24582);
+        do Memory.poke(memAddress + 128, -16381);
+        do Memory.poke(memAddress + 160, -16381);
+        do Memory.poke(memAddress + 192, -16381);
+        do Memory.poke(memAddress + 224, -16381);
+        do Memory.poke(memAddress + 256, -16381);
+        do Memory.poke(memAddress + 288, -16381);
+        do Memory.poke(memAddress + 320, -16381);
+        do Memory.poke(memAddress + 352, -16381);
+        do Memory.poke(memAddress + 384, 24582);
+        do Memory.poke(memAddress + 416, 12300);
+        do Memory.poke(memAddress + 448, 8184);
+        do Memory.poke(memAddress + 480, 4080);
+        return;
     }
 }
