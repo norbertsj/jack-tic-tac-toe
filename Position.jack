@@ -1,0 +1,33 @@
+class Position {
+    field String value;
+    field int x;
+    field int y;
+
+    constructor Position new(int x, int y) {
+        let x = x;
+        let y = y;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void setValue(String value) {
+        let value = value;
+        return;
+    }
+
+    method void draw() {
+        if (value = "X") {
+            do FigureX.draw(x, y);
+        }
+
+        if (value = "O") {
+            do FigureO.draw(x, y);
+        }
+
+        return;
+    }
+}

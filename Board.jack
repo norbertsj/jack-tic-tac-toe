@@ -1,0 +1,78 @@
+class Board {
+    field Position p1;
+    field Position p2;
+    field Position p3;
+    field Position p4;
+    field Position p5;
+    field Position p6;
+    field Position p7;
+    field Position p8;
+    field Position p9;
+
+    constructor Board new() {
+        let p1 = Position.new(180, 50);
+        let p2 = Position.new(230, 50);
+        let p3 = Position.new(280, 50);
+        let p4 = Position.new(180, 100);
+        let p5 = Position.new(230, 100);
+        let p6 = Position.new(280, 100);
+        let p7 = Position.new(180, 150);
+        let p8 = Position.new(230, 150);
+        let p9 = Position.new(280, 150);
+        do draw();
+        return this;
+    }
+
+    method void dispose() {
+        do p1.dispose();
+        do p2.dispose();
+        do p3.dispose();
+        do p4.dispose();
+        do p5.dispose();
+        do p6.dispose();
+        do p7.dispose();
+        do p8.dispose();
+        do p9.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method Position getPosition(int input) {
+        if (input = 1) { return p1; }
+        if (input = 2) { return p2; }
+        if (input = 3) { return p3; }
+        if (input = 4) { return p4; }
+        if (input = 5) { return p5; }
+        if (input = 6) { return p6; }
+        if (input = 7) { return p7; }
+        if (input = 8) { return p8; }
+        if (input = 9) { return p9; }
+        return;
+    }
+
+    method void fillPosition(String value, int input) {
+        var Position position;
+        let position = getPosition(input);
+        do position.setValue(value);
+        return;
+    }
+
+    method void draw() {
+        do Screen.clear();
+        do Screen.setColor(true);
+        do Screen.drawLine(180, 100, 330, 100);
+        do Screen.drawLine(180, 150, 330, 150);
+        do Screen.drawLine(230, 50, 230, 200);
+        do Screen.drawLine(280, 50, 280, 200);
+        do p1.draw();
+        do p2.draw();
+        do p3.draw();
+        do p4.draw();
+        do p5.draw();
+        do p6.draw();
+        do p7.draw();
+        do p8.draw();
+        do p9.draw();
+        return;
+    }
+}

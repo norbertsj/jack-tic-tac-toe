@@ -1,0 +1,5 @@
+class FigureX {
+    function void draw(int x, int y) {
+        // todo
+    }
+}

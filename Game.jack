@@ -1,0 +1,51 @@
+class Game {
+    field Board board;
+    field String player;
+    field boolean running;
+
+    constructor Game new() {
+        let board = Board.new();
+        let running = false;
+        let player = "X";
+        return this;
+    }
+
+    method void dispose() {
+        do board.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void run() {
+        // gameRunning = true
+
+        // while(gameRunning)
+        //     input = system.readInput()
+        //     positionFilled = board.fillPosition(player, input)
+        //     if (!positionFilled)
+        //         system.writeOutput("Invalid move")
+        //     checkGame()
+        //     board.draw()
+
+        // system.writeOutput("Player %s wins", player)
+        // NEXT???
+    }
+
+    method void checkGame() {
+        // if (checkVertical() AND checkHorizontal() AND checkDiagonal())
+        //     switchPlayer()
+        // else
+        //     gameRunning = false
+    }
+
+    method void switchPlayer() {
+        // if (player == 'X')
+        //     player = 'O'
+        // else
+        //     player = 'X'
+    }
+
+    method void checkVertical() {}
+    method void checkHorizontal() {}
+    method void checkDiagonal() {}
+}
