@@ -50,11 +50,22 @@ class Board {
         return null;
     }
 
-    method void fillPosition(String value, int input) {
+    method void fillPosition(int value, int input) {
         var Position position;
         let position = getPosition(input);
         do position.setValue(value);
         return;
+    }
+
+    method boolean isValidPosition(int input) {
+        var Position position;
+        let position = getPosition(input);
+
+        if (position = null) {
+            return false;
+        }
+
+        return ~(position.hasValue());
     }
 
     method void draw() {
@@ -76,5 +87,120 @@ class Board {
         do p9.draw();
 
         return;
+    }
+
+    method Array getPositionValues() {
+        var Array values;
+        let values = Array.new(9);
+
+        let values[0] = p1.getValue();
+        let values[1] = p2.getValue();
+        let values[2] = p3.getValue();
+        let values[3] = p4.getValue();
+        let values[4] = p5.getValue();
+        let values[5] = p6.getValue();
+        let values[6] = p7.getValue();
+        let values[7] = p8.getValue();
+        let values[8] = p9.getValue();
+
+        return values;
+    }
+
+    method boolean isHorizontalMatch() {
+        var Array v;
+        let v = getPositionValues();
+
+        if ((v[0] = 1) & (v[1] = 1) & (v[2] = 1)) {
+            return true;
+        }
+
+        if ((v[0] = 2) & (v[1] = 2) & (v[2] = 2)) {
+            return true;
+        }
+
+        if ((v[3] = 1) & (v[4] = 1) & (v[5] = 1)) {
+            return true;
+        }
+
+        if ((v[3] = 2) & (v[4] = 2) & (v[5] = 2)) {
+            return true;
+        }
+
+        if ((v[6] = 1) & (v[7] = 1) & (v[8] = 1)) {
+            return true;
+        }
+
+        if ((v[6] = 2) & (v[7] = 2) & (v[8] = 2)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    method boolean isVerticalMatch() {
+        var Array v;
+        let v = getPositionValues();
+
+        if ((v[0] = 1) & (v[3] = 1) & (v[6] = 1)) {
+            return true;
+        }
+
+        if ((v[0] = 2) & (v[3] = 2) & (v[6] = 2)) {
+            return true;
+        }
+
+        if ((v[1] = 1) & (v[4] = 1) & (v[7] = 1)) {
+            return true;
+        }
+
+        if ((v[1] = 2) & (v[4] = 2) & (v[7] = 2)) {
+            return true;
+        }
+
+        if ((v[2] = 1) & (v[5] = 1) & (v[8] = 1)) {
+            return true;
+        }
+
+        if ((v[2] = 2) & (v[5] = 2) & (v[8] = 2)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    method boolean isDiagonalMatch() {
+        var Array v;
+        let v = getPositionValues();
+
+        if ((v[0] = 1) & (v[4] = 1) & (v[8] = 1)) {
+            return true;
+        }
+
+        if ((v[0] = 2) & (v[4] = 2) & (v[8] = 2)) {
+            return true;
+        }
+
+        if ((v[2] = 1) & (v[4] = 1) & (v[6] = 1)) {
+            return true;
+        }
+
+        if ((v[2] = 2) & (v[4] = 2) & (v[6] = 2)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    method boolean allPositionsFilled() {
+        return (
+            (p1.hasValue()) &
+            (p2.hasValue()) &
+            (p3.hasValue()) &
+            (p4.hasValue()) &
+            (p5.hasValue()) &
+            (p6.hasValue()) &
+            (p7.hasValue()) &
+            (p8.hasValue())
+        );
     }
 }

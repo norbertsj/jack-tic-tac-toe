@@ -1,12 +1,14 @@
 class Game {
     field Board board;
-    field String player;
+    field int player;
     field boolean running;
+    field boolean draw;
 
     constructor Game new() {
         let board = Board.new();
         let running = false;
-        let player = "X";
+        let draw = false;
+        let player = 2; // 0: none; 1: X; 2: O
         return this;
     }
 
@@ -21,30 +23,46 @@ class Game {
         let running = true;
 
         while (running) {
+            do switchPlayer();
             let input = readInput();
             do board.fillPosition(player, input);
             do board.draw();
-            do switchPlayer();
+            let running = doWeKeepRunning();            
         }
 
+        if (draw) {
+            do Output.printString("Draw!");
+        } else {
+            if (player = 1) {
+                do Output.printString("Player X wins!");
+            } else {
+                do Output.printString("Player O wins!");
+            }
+        }
+        
         return;
     }
 
     method int readInput() {
         var String readMessage;
         var int input;
+        var boolean invalidInput;
         let input = 0;
+        let invalidInput = true;
 
-        if (player.charAt(0) = 88) {
+        if (player = 1) {
             let readMessage = "Move for X:";
         } else {
             let readMessage = "Move for O:";
         }
 
-        // valid inputs: 1 - 9 (strings will be casted to 0)
-        while ((input < 1) | (input > 9)) {
+        while (invalidInput) {
             do resetCursor();
-            let input = Keyboard.readInt(readMessage); // need to figure out how to clear the line..
+            let input = Keyboard.readInt(readMessage);
+
+            if ((input > 0) & (input < 10) & (board.isValidPosition(input))) {
+                let invalidInput = false;
+            }
         }
 
         return input;
@@ -56,12 +74,25 @@ class Game {
     }
 
     method void switchPlayer() {
-        if (player.charAt(0) = 88) {
-            let player = "O";
+        if (player = 1) {
+            let player = 2;
         } else {
-            let player = "X";
+            let player = 1;
         }
 
         return;
+    }
+
+    method boolean doWeKeepRunning() {
+        if ((board.isHorizontalMatch()) | (board.isVerticalMatch()) | (board.isDiagonalMatch())) {
+            return false;
+        }
+
+        if (board.allPositionsFilled()) {
+            let draw = true;
+            return false;
+        }
+
+        return true;
     }
 }
