@@ -1,49 +1,9 @@
 class Main {
-    // function void main() {
-    //     var Game game;
-    //     let game = Game.new();
-    //     do game.run();
-    //     do game.dispose();
-    // }
-
-    function void main() {
-        do Main.drawField();
-        do Main.handleInput();
-
-        return;
-    }
-
-   function void drawField() {
-      do Screen.setColor(true);
-
-      do Screen.drawLine(180, 100, 330, 100);
-      do Screen.drawLine(180, 150, 330, 150);
-
-      do Screen.drawLine(230, 50, 230, 200);
-      do Screen.drawLine(280, 50, 280, 200);
-
-      return;
-   }
-
-   function void handleInput() {
-      var int currentMove;
-      let currentMove = 0;
-
-      // valid moves: 1 - 9 (strings will be casted to 0)
-      while ((currentMove < 1) | (currentMove > 9)) {
-         do Main.resetCursor();
-         let currentMove = Keyboard.readInt("Move for X: "); // need to figure out how to clear the line..
-      }
-
-      do Output.printString("Selected move for X: ");
-      do Output.printInt(currentMove);
-      do Output.println();
-
-      return;
-   }
-
-   function void resetCursor() {
-      do Output.moveCursor(20, 0);
+   function void main() {
+      var Game game;
+      let game = Game.new();
+      do game.run();
+      do game.dispose();
       return;
    }
 }

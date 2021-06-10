@@ -17,35 +17,51 @@ class Game {
     }
 
     method void run() {
-        // gameRunning = true
+        var int input;
+        let running = true;
 
-        // while(gameRunning)
-        //     input = system.readInput()
-        //     positionFilled = board.fillPosition(player, input)
-        //     if (!positionFilled)
-        //         system.writeOutput("Invalid move")
-        //     checkGame()
-        //     board.draw()
+        while (running) {
+            let input = readInput();
+            do board.fillPosition(player, input);
+            do board.draw();
+            do switchPlayer();
+        }
 
-        // system.writeOutput("Player %s wins", player)
-        // NEXT???
+        return;
     }
 
-    method void checkGame() {
-        // if (checkVertical() AND checkHorizontal() AND checkDiagonal())
-        //     switchPlayer()
-        // else
-        //     gameRunning = false
+    method int readInput() {
+        var String readMessage;
+        var int input;
+        let input = 0;
+
+        if (player.charAt(0) = 88) {
+            let readMessage = "Move for X:";
+        } else {
+            let readMessage = "Move for O:";
+        }
+
+        // valid inputs: 1 - 9 (strings will be casted to 0)
+        while ((input < 1) | (input > 9)) {
+            do resetCursor();
+            let input = Keyboard.readInt(readMessage); // need to figure out how to clear the line..
+        }
+
+        return input;
+    }
+
+    method void resetCursor() {
+        do Output.moveCursor(20, 0);
+        return;
     }
 
     method void switchPlayer() {
-        // if (player == 'X')
-        //     player = 'O'
-        // else
-        //     player = 'X'
-    }
+        if (player.charAt(0) = 88) {
+            let player = "O";
+        } else {
+            let player = "X";
+        }
 
-    method void checkVertical() {}
-    method void checkHorizontal() {}
-    method void checkDiagonal() {}
+        return;
+    }
 }

@@ -1,8 +1,13 @@
 class FigureX {
     function void draw(int x, int y) {
-        var int location;
-        // todo: figure out location..
-        let memAddress = 16384 + location;
+        var int memAddress;
+        var int xOffset;
+        var int yOffset;
+
+        let xOffset = x + 25;
+        let yOffset = y + 20;
+        let memAddress = 16384 + (yOffset * 32) + (xOffset / 16);
+
         do Memory.poke(memAddress + 0, -8185);
         do Memory.poke(memAddress + 32, -4081);
         do Memory.poke(memAddress + 64, 30750);

@@ -3,9 +3,10 @@ class Position {
     field int x;
     field int y;
 
-    constructor Position new(int x, int y) {
-        let x = x;
-        let y = y;
+    constructor Position new(int xIn, int yIn) {
+        let x = xIn;
+        let y = yIn;
+        let value = "INIT";
         return this;
     }
 
@@ -14,17 +15,17 @@ class Position {
         return;
     }
 
-    method void setValue(String value) {
-        let value = value;
+    method void setValue(String valueIn) {
+        let value = valueIn;
         return;
     }
 
     method void draw() {
-        if (value = "X") {
+        if (value.charAt(0) = 88) {
             do FigureX.draw(x, y);
         }
 
-        if (value = "O") {
+        if (value.charAt(0) = 79) {
             do FigureO.draw(x, y);
         }
 
