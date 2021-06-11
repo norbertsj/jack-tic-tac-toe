@@ -19,7 +19,7 @@ class Board {
         let p7 = Position.new(180, 150);
         let p8 = Position.new(230, 150);
         let p9 = Position.new(280, 150);
-        do draw();
+
         return this;
     }
 
@@ -34,6 +34,7 @@ class Board {
         do p8.dispose();
         do p9.dispose();
         do Memory.deAlloc(this);
+
         return;
     }
 
@@ -47,6 +48,7 @@ class Board {
         if (input = 7) { return p7; }
         if (input = 8) { return p8; }
         if (input = 9) { return p9; }
+
         return null;
     }
 
@@ -54,6 +56,7 @@ class Board {
         var Position position;
         let position = getPosition(input);
         do position.setValue(value);
+
         return;
     }
 
@@ -200,7 +203,22 @@ class Board {
             (p5.hasValue()) &
             (p6.hasValue()) &
             (p7.hasValue()) &
-            (p8.hasValue())
+            (p8.hasValue()) &
+            (p9.hasValue())
         );
+    }
+
+    method void clear() {
+        do p1.setValue(0);
+        do p2.setValue(0);
+        do p3.setValue(0);
+        do p4.setValue(0);
+        do p5.setValue(0);
+        do p6.setValue(0);
+        do p7.setValue(0);
+        do p8.setValue(0);
+        do p9.setValue(0);
+
+        return;
     }
 }

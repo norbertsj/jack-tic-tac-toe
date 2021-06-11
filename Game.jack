@@ -1,66 +1,99 @@
 class Game {
     field Board board;
-    field int player;
-    field boolean running;
-    field boolean draw;
+    field int currentPlayer;
+    field boolean gameInProgress;
+    field boolean gameIsDraw;
+
+    static int PLAYER_X;
+    static int PLAYER_O;
+    static int CHAR_SPACE;
+    static int CHAR_Y;
+    static int CHAR_N;
+    static int MOVE_LOW;
+    static int MOVE_HIGH;
 
     constructor Game new() {
+        let PLAYER_X = 1;
+        let PLAYER_O = 2;
+        let CHAR_SPACE = 32;
+        let CHAR_Y = 89;
+        let CHAR_N = 78;
+        let MOVE_LOW = 1;
+        let MOVE_HIGH = 9;
+
         let board = Board.new();
-        let running = false;
-        let draw = false;
-        let player = 2; // 0: none; 1: X; 2: O
+        do init();
+
         return this;
     }
 
     method void dispose() {
         do board.dispose();
         do Memory.deAlloc(this);
+
+        return;
+    }
+
+    method void init() {
+        let gameInProgress = false;
+        let gameIsDraw = false;
+        let currentPlayer = PLAYER_O;
+
         return;
     }
 
     method void run() {
-        var int input;
-        let running = true;
+        var int moveInput;
 
-        while (running) {
+        let gameInProgress = true;
+        do board.draw();
+
+        while (gameInProgress) {
             do switchPlayer();
-            let input = readInput();
-            do board.fillPosition(player, input);
+            let moveInput = readMoveInput();
+            do board.fillPosition(currentPlayer, moveInput);
             do board.draw();
-            let running = doWeKeepRunning();            
+            let gameInProgress = doWeKeepRunning();
         }
 
-        if (draw) {
+        if (gameIsDraw) {
             do Output.printString("Draw!");
         } else {
-            if (player = 1) {
+            if (currentPlayer = PLAYER_X) {
                 do Output.printString("Player X wins!");
             } else {
                 do Output.printString("Player O wins!");
             }
         }
-        
+
+        if (doWePlayAgain()) {
+            do restart();
+        } else {
+            do Screen.clearScreen();
+        }
+
         return;
     }
 
-    method int readInput() {
+    method int readMoveInput() {
         var String readMessage;
         var int input;
         var boolean invalidInput;
+
         let input = 0;
         let invalidInput = true;
 
-        if (player = 1) {
+        if (currentPlayer = PLAYER_X) {
             let readMessage = "Move for X:";
         } else {
             let readMessage = "Move for O:";
         }
 
         while (invalidInput) {
-            do resetCursor();
+            do resetCursor(19, 0, true);
             let input = Keyboard.readInt(readMessage);
 
-            if ((input > 0) & (input < 10) & (board.isValidPosition(input))) {
+            if ((isValidMoveInput(input)) & (board.isValidPosition(input))) {
                 let invalidInput = false;
             }
         }
@@ -68,16 +101,47 @@ class Game {
         return input;
     }
 
-    method void resetCursor() {
-        do Output.moveCursor(20, 0);
+    method boolean isValidMoveInput(int input) {
+        if (input < MOVE_LOW) {
+            return false;
+        }
+
+        if (input > MOVE_HIGH) {
+            return false;
+        }
+
+        return true;
+    }
+
+    method void resetCursor(int line, int column, boolean clear) {
+        if (clear) {
+            do clearLine(line);
+        }
+
+        do Output.moveCursor(line, column);
+
+        return;
+    }
+
+    method void clearLine(int line) {
+        var int counter;
+        let counter = 1;
+
+        do Output.moveCursor(line, 0);
+
+        while (counter < 64) {
+            do Output.printChar(CHAR_SPACE);
+            let counter = counter + 1;
+        }
+
         return;
     }
 
     method void switchPlayer() {
-        if (player = 1) {
-            let player = 2;
+        if (currentPlayer = PLAYER_X) {
+            let currentPlayer = PLAYER_O;
         } else {
-            let player = 1;
+            let currentPlayer = PLAYER_X;
         }
 
         return;
@@ -89,10 +153,40 @@ class Game {
         }
 
         if (board.allPositionsFilled()) {
-            let draw = true;
+            let gameIsDraw = true;
             return false;
         }
 
         return true;
+    }
+
+    method boolean doWePlayAgain() {
+        var int keyInput;
+        var boolean invalidInput;
+
+        do Output.println();
+        do Output.printString("Do you want to replay? (Y/N):");
+
+        let keyInput = 0;
+        let invalidInput = true;
+
+        while (invalidInput) {
+            do resetCursor(21, 29, false);
+            let keyInput = Keyboard.readChar();
+
+            if ((keyInput = CHAR_Y) | (keyInput = CHAR_N)) {
+                let invalidInput = false;
+            }
+        }
+
+        return (keyInput = CHAR_Y);
+    }
+
+    method void restart() {
+        do init();
+        do board.clear();
+        do run();
+
+        return;
     }
 }

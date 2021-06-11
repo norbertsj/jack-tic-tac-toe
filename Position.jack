@@ -7,6 +7,7 @@ class Position {
         let x = xIn;
         let y = yIn;
         let value = 0;
+
         return this;
     }
 
