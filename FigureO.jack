@@ -1,29 +1,14 @@
 class FigureO {
     function void draw(int x, int y) {
-        var int memAddress;
-        var int xOffset;
-        var int yOffset;
+        do Screen.drawLine((x + 10), (y + 15), (x + 15), (y + 10));
+        do Screen.drawLine((x + 15), (y + 10), (x + 35), (y + 10));
+        do Screen.drawLine((x + 35), (y + 10), (x + 40), (y + 15));
+        do Screen.drawLine((x + 40), (y + 15), (x + 40), (y + 35));
+        do Screen.drawLine((x + 40), (y + 35), (x + 35), (y + 40));
+        do Screen.drawLine((x + 35), (y + 40), (x + 15), (y + 40));
+        do Screen.drawLine((x + 15), (y + 40), (x + 10), (y + 35));
+        do Screen.drawLine((x + 10), (y + 35), (x + 10), (y + 15));
 
-        let xOffset = x + 25;
-        let yOffset = y + 20;
-        let memAddress = 16384 + (yOffset * 32) + (xOffset / 16);
-
-        do Memory.poke(memAddress + 0, 4080);
-        do Memory.poke(memAddress + 32, 8184);
-        do Memory.poke(memAddress + 64, 12300);
-        do Memory.poke(memAddress + 96, 24582);
-        do Memory.poke(memAddress + 128, -16381);
-        do Memory.poke(memAddress + 160, -16381);
-        do Memory.poke(memAddress + 192, -16381);
-        do Memory.poke(memAddress + 224, -16381);
-        do Memory.poke(memAddress + 256, -16381);
-        do Memory.poke(memAddress + 288, -16381);
-        do Memory.poke(memAddress + 320, -16381);
-        do Memory.poke(memAddress + 352, -16381);
-        do Memory.poke(memAddress + 384, 24582);
-        do Memory.poke(memAddress + 416, 12300);
-        do Memory.poke(memAddress + 448, 8184);
-        do Memory.poke(memAddress + 480, 4080);
         return;
     }
 }

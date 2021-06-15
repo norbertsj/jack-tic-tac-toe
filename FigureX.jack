@@ -1,29 +1,8 @@
 class FigureX {
     function void draw(int x, int y) {
-        var int memAddress;
-        var int xOffset;
-        var int yOffset;
+        do Screen.drawLine((x + 10), (y + 10), (x + 40), (y + 40));
+        do Screen.drawLine((x + 10), (y + 40), (x + 40), (y + 10));
 
-        let xOffset = x + 25;
-        let yOffset = y + 20;
-        let memAddress = 16384 + (yOffset * 32) + (xOffset / 16);
-
-        do Memory.poke(memAddress + 0, -8185);
-        do Memory.poke(memAddress + 32, -4081);
-        do Memory.poke(memAddress + 64, 30750);
-        do Memory.poke(memAddress + 96, 15420);
-        do Memory.poke(memAddress + 128, 7800);
-        do Memory.poke(memAddress + 160, 3696);
-        do Memory.poke(memAddress + 192, 2016);
-        do Memory.poke(memAddress + 224, 960);
-        do Memory.poke(memAddress + 256, 960);
-        do Memory.poke(memAddress + 288, 4080);
-        do Memory.poke(memAddress + 320, 7800);
-        do Memory.poke(memAddress + 352, 15420);
-        do Memory.poke(memAddress + 384, 30750);
-        do Memory.poke(memAddress + 416, -4081);
-        do Memory.poke(memAddress + 448, -8185);
-        do Memory.poke(memAddress + 480, -16381);
         return;
     }
 }
