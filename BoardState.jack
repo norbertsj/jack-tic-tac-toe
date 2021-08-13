@@ -1,0 +1,38 @@
+class BoardState {
+    field boolean match;
+    field int line; // BoardMatchLine
+
+    constructor BoardState new() {
+        do init();
+
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        
+        return;
+    }
+
+    method boolean getMatch() {
+        return match;
+    }
+
+    method String getLine() {
+        return line;
+    }
+
+    method void init() {
+        let match = false;
+        let line = 0;
+
+        return;
+    }
+
+    method void update(boolean aMatch, int aLine) {
+        let match = aMatch;
+        let line = aLine;
+
+        return;
+    }
+}

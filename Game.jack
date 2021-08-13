@@ -148,7 +148,7 @@ class Game {
     }
 
     method boolean doWeKeepRunning() {
-        if ((board.isHorizontalMatch()) | (board.isVerticalMatch()) | (board.isDiagonalMatch())) {
+        if (board.isMatch()) {
             return false;
         }
 
