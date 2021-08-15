@@ -201,52 +201,122 @@ class Board {
     }
 
     method void drawMatchLine(int line) {
+        var int t1;
+        var int t2;
+
         if (line = H1) {
-            do Screen.drawLine(180, 74, 330, 74);
-            do Screen.drawLine(180, 75, 330, 75);
-            do Screen.drawLine(180, 76, 330, 76);
+            do drawAnimatedMatchLine(180, 75, 330, 75);
         }
 
         if (line = H2) {
-            do Screen.drawLine(180, 124, 330, 124);
-            do Screen.drawLine(180, 125, 330, 125);
-            do Screen.drawLine(180, 126, 330, 126);
+            do drawAnimatedMatchLine(180, 125, 330, 125);
         }
 
         if (line = H3) {
-            do Screen.drawLine(180, 174, 330, 174);
-            do Screen.drawLine(180, 175, 330, 175);
-            do Screen.drawLine(180, 176, 330, 176);
+            do drawAnimatedMatchLine(180, 175, 330, 175);
         }
         
         if (line = V1) {
-            do Screen.drawLine(204, 50, 204, 200);
-            do Screen.drawLine(205, 50, 205, 200);
-            do Screen.drawLine(206, 50, 206, 200);
+            do drawAnimatedMatchLine(205, 50, 205, 200);
         }
 
         if (line = V2) {
-            do Screen.drawLine(254, 50, 254, 200);
-            do Screen.drawLine(255, 50, 255, 200);
-            do Screen.drawLine(256, 50, 256, 200);
+            do drawAnimatedMatchLine(255, 50, 255, 200);
         }
 
         if (line = V3) {
-            do Screen.drawLine(304, 50, 304, 200);
-            do Screen.drawLine(305, 50, 305, 200);
-            do Screen.drawLine(306, 50, 306, 200);
+            do drawAnimatedMatchLine(305, 50, 305, 200);
         }
 
         if (line = D1) {
-            do Screen.drawLine(180, 49, 330, 199);
-            do Screen.drawLine(180, 50, 330, 200);
-            do Screen.drawLine(180, 51, 330, 201);
+            do drawAnimatedMatchLine(180, 50, 330, 200);
         }
 
         if (line = D2) {
-            do Screen.drawLine(180, 199, 330, 49);
-            do Screen.drawLine(180, 200, 330, 50);
-            do Screen.drawLine(180, 201, 330, 51);
+            do drawAnimatedMatchLine(180, 200, 330, 50);
+        }
+
+        return;
+    }
+
+    method void drawAnimatedMatchLine(int x1, int y1, int x2, int y2) {
+        var int xTemp1, xTemp2, yTemp1, yTemp2, pixelsPerStep, delayMs;
+        var boolean xChanges, yChanges, condition;
+        let xChanges = true;
+        let yChanges = true;
+        let pixelsPerStep = 10;
+        let delayMs = 10;
+
+        if (x1 = x2) {
+            let xChanges = false;
+        }
+
+        if (y1 = y2) {
+            let yChanges = false;
+        }
+
+        // in our case "x" always gets incremented, so lets init it here
+        let xTemp1 = x1;
+        let xTemp2 = x1 + pixelsPerStep;
+
+        if (xChanges & yChanges) {
+            // diagonal (if y2 < y1 then it is a D2 line, otherwise D1
+
+            if (y2 < y1) {
+                let yTemp1 = y1;
+                let yTemp2 = y1 - pixelsPerStep;
+                let condition = (xTemp2 < (x2 + 1)) & (yTemp2 > (y2 - 1));
+            } else {
+                let yTemp1 = y1;
+                let yTemp2 = y1 + pixelsPerStep;
+                let condition = (xTemp2 < (x2 + 1)) & (yTemp2 < (y2 + 1));
+            }
+
+            while (condition) {
+                do Screen.drawLine(xTemp1, yTemp1 - 1, xTemp2, yTemp2 - 1);
+                do Screen.drawLine(xTemp1, yTemp1, xTemp2, yTemp2);
+                do Screen.drawLine(xTemp1, yTemp1 + 1, xTemp2, yTemp2 + 1);
+                let xTemp1 = xTemp1 + pixelsPerStep;
+                let xTemp2 = xTemp2 + pixelsPerStep;
+                
+                if (y2 < y1) {
+                    let yTemp1 = yTemp1 - pixelsPerStep;
+                    let yTemp2 = yTemp2 - pixelsPerStep;
+                    let condition = (xTemp2 < (x2 + 1)) & (yTemp2 > (y2 - 1));
+                } else {
+                    let yTemp1 = yTemp1 + pixelsPerStep;
+                    let yTemp2 = yTemp1 + pixelsPerStep;
+                    let condition = (xTemp2 < (x2 + 1)) & (yTemp2 < (y2 + 1));
+                }
+
+                do Sys.wait(delayMs);
+            }
+        } else {
+            if (xChanges) {
+                // horizontal (assuming x1 < x2)
+                while (xTemp2 < (x2 + 1)) {
+                    do Screen.drawLine(xTemp1, y1 - 1, xTemp2, y1 - 1);
+                    do Screen.drawLine(xTemp1, y1, xTemp2, y1);
+                    do Screen.drawLine(xTemp1, y1 + 1, xTemp2, y1 + 1);
+                    let xTemp1 = xTemp1 + pixelsPerStep;
+                    let xTemp2 = xTemp2 + pixelsPerStep;
+                    do Sys.wait(delayMs);
+                }
+            }
+
+            if (yChanges) {
+                // vertical (assuming y1 < y2)
+                let yTemp1 = y1;
+                let yTemp2 = y1 + pixelsPerStep;
+                while (yTemp2 < (y2 + 1)) {
+                    do Screen.drawLine(x1 - 1, yTemp1, x1 - 1, yTemp2);
+                    do Screen.drawLine(x1, yTemp1, x1, yTemp2);
+                    do Screen.drawLine(x1 + 1, yTemp1, x1 + 1, yTemp2);
+                    let yTemp1 = yTemp1 + pixelsPerStep;
+                    let yTemp2 = yTemp2 + pixelsPerStep;
+                    do Sys.wait(delayMs);
+                }
+            }
         }
 
         return;
