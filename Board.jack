@@ -201,9 +201,6 @@ class Board {
     }
 
     method void drawMatchLine(int line) {
-        var int t1;
-        var int t2;
-
         if (line = H1) {
             do drawAnimatedMatchLine(180, 75, 330, 75);
         }
